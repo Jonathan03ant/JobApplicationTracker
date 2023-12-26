@@ -1,20 +1,23 @@
 import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 import NavBar from './Components/NavBar'
-import Job from './Components/Job';
+import Watchlist from './Components/Routers/Watchlist';
+import AddApplication from './Components/Routers/AddApplication';
+import Dashboard from './Components/Routers/Dashboard';
 
 function App() {
   return (
-    <>
+    <Router>
         <NavBar/>
-        <div className='px-20 grid grid-cols-1 md:grid-cols-2 gap-10 mt-10'>
-            <Job/>
-            <Job/>
-            <Job/>
-            <Job/>
-            <Job/>
-        </div>
-    </>
+        <Routes>
+
+            <Route path="/dashboard" element={<Dashboard/>} />  
+            <Route path="/add-application" element={<AddApplication/>} /> 
+            <Route path="/watchlist" element={<Watchlist/>} /> 
+            
+        </Routes>
+    </Router>
 
   )
 }
