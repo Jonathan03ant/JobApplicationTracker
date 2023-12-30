@@ -9,27 +9,27 @@ export default function AddApplication( {addApplication}) {
     const [location, setLocation] = useState('');
     const [salary, setSalary] = useState('');
     const [status, setStatus] = useState('');
-    const [dateApplied, setDateApplied] = useState('');
+    const [dateAdded, setDateAdded] = useState('');
     const [contact, setContact] = useState('');
     const [notes, setNotes] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        addApplication({jobLink, jobTitle, companyName, location, salary, status, dateApplied, contact, notes});
+        addApplication({jobLink, jobTitle, companyName, location, salary, status, dateAdded, contact, notes});
         setJobLink('');
         setCompanyName('');
         setJobTitle('');
         setLocation('');
         setSalary('');
         setStatus('');
-        setDateApplied('');
+        setDateAdded('');
         setContact('');
         setNotes('');
     };
 
     return (
-        <div className="flex items-center justify-center bg-red-100 py-10 mt-20">
-            <div className="bg-white p-6 rounded shadow-md w-full md:w-1/2 lg:w-1/2 xl:w-1/2">
+        <div className="flex items-center justify-center py-10 mt-20">
+            <div className="bg-black rounded-md shadow-2xl w-full md:w-1/2 lg:w-1/2 xl:w-1/2">
                 <ApplicationForm
                     jobLink={jobLink}
                     setJobLink={setJobLink}
@@ -43,8 +43,8 @@ export default function AddApplication( {addApplication}) {
                     setSalary={setSalary}
                     status={status}
                     setStatus={setStatus}
-                    dateApplied={dateApplied}
-                    setDateApplied={setDateApplied}
+                    dateAdded={dateAdded}
+                    setDateAdded={setDateAdded}
                     contact={contact}
                     setContact={setContact}
                     notes={notes}
