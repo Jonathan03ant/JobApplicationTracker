@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ApplicationForm from '../ApplicationForm';
 
-export default function AddApplication( {addApplication}) {
+import { db } from '../../Firebase';
+import { auth } from '../../Firebase';
+import { collection, addDoc } from 'firebase/firestore';
+
+export default function AddApplication( {}) {
+    const navigate = useNavigate();
+
     const [jobLink, setJobLink] = useState('');
     const [companyName, setCompanyName] = useState('');
     const [jobTitle, setJobTitle] = useState('');
@@ -13,9 +20,23 @@ export default function AddApplication( {addApplication}) {
     const [contact, setContact] = useState('');
     const [notes, setNotes] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        addApplication({jobLink, jobTitle, companyName, location, salary, status, dateAdded, contact, notes});
+
+        const applicationData = {jobLink, jobTitle, companyName, location, salary, status, dateAdded, contact, notes};
+
+        try {
+            const userId = auth.currentUser.uid;
+
+            const appCollectionRef = collection (db, 'users', userId, 'applications');
+
+            const docRef = await addDoc(appCollectionRef, applicationData);
+            console.log('Document written with ID: ', docRef.id);
+            navigate('/dashboard');
+        } catch (e) {
+            console.error('Error adding document: ', e);
+        }
+        
         setJobLink('');
         setCompanyName('');
         setJobTitle('');
