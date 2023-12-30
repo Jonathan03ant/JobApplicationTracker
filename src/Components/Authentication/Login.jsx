@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {auth} from '../../Firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 
 export default function login() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -13,6 +15,7 @@ export default function login() {
         signInWithEmailAndPassword(auth, email, password)
             .then ((userCredential) => {
                 const user = userCredential.user;
+                navigate('/dashboard');
                 console.log(user)
             })
             .catch ((error) => {
