@@ -23,7 +23,12 @@ export default function AddApplication( {}) {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const applicationData = {jobLink, jobTitle, companyName, location, salary, status, dateAdded, contact, notes};
+        let finalJobLink = jobLink;
+        if (!jobLink.startsWith('http://') && !jobLink.startsWith('https://')) {
+            finalJobLink = 'http://' + jobLink;
+        }
+
+        const applicationData = {jobLink: finalJobLink, jobTitle, companyName, location, salary, status, dateAdded, contact, notes, watchlist: false};
 
         try {
             const userId = auth.currentUser.uid;
