@@ -1,8 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { doc, deleteDoc } from 'firebase/firestore';
+import { auth, db } from '../Firebase';
+import { IoArrowRedoOutline } from "react-icons/io5";
+import { TbTrashX } from "react-icons/tb";
+import { MdModeEdit } from "react-icons/md";
+import { MdOutlineLabelImportant } from "react-icons/md";
 
 
-export default function ApplicationTable({ applications = [] }) {
+
+export default function ApplicationTable({ applications = [], handleRefresh }) {
+    const handleDelete = async (id) => {
+        const userId = auth.currentUser.uid;
+        await deleteDoc(doc(db, 'users', userId, 'applications', id));
+        handleRefresh();
+    };
+
     return (
         <div>
             <div className="flex flex-wrap -mx-3 mb-5">
@@ -21,24 +33,33 @@ export default function ApplicationTable({ applications = [] }) {
                         <div className="overflow-x-auto">
                             <table className="w-full my-0 align-middle text-dark border-neutral-200">
                             <thead className="align-bottom">
-                                <tr className="font-semibold text-[0.95rem] text-secondary-dark">
-                                <th className="pb-3 text-start min-w-[175px]">Job Description</th>
-                                <th className="pb-3 text-end min-w-[100px]">Company Name </th>
-                                <th className="pb-3 text-end min-w-[100px]">Location</th>
-                                <th className="pb-3 pr-12 text-end min-w-[175px]">Status</th>
-                                <th className="pb-3 pr-12 text-end min-w-[100px]">Date Added</th>
-                                <th className="pb-3 text-end min-w-[50px]">Action</th>
+                                <tr className="font-bold text-[0.95rem] text-secondary-dark">
+                                <th className="pb-3 text-start min-w-[100px]">Job Description</th>
+                                <th className="pb-3 text-start min-w-[100px]">Company Name </th>
+                                <th className="pb-3 text-start min-w-[100px]">Location</th>
+                                <th className="pb-3 pr-12 text-start min-w-[100px]">Status</th>
+                                <th className="pb-3 pr-12 text-start min-w-[100px]">Date Added</th>
+                                <th className="pb-3 text-start min-w-[100px]">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {applications.map((application, index) => (
-                                    <tr key={index} class="border-b border-dashed last:border-b-0">
-                                        <td className="p-3 pl-0">{application.jobTitle}</td>
-                                        <td className="p-3 pr-0 text-end">{application.companyName}</td>
-                                        <td className="p-3 pr-0 text-end">{application.location}</td>
-                                        <td className="p-3 pr-12 text-end">{application.status}</td>
-                                        <td className="pr-0 text-start">{application.dateAdded}</td>
-                                        <td className="p-3 pr-0 text-end">Action</td>
+                                    <tr key={index} class="border-b border-solid last:border-b-0">
+                                        <td className="p-3 pl-1">
+                                            <a href={application.jobLink} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                                                {application.jobTitle} <IoArrowRedoOutline className="inline-block text-sm text-blue-400 "/>
+                                            </a>
+                                        </td>
+                                        <td className="p-3 pr-1 text-start">{application.companyName}</td>
+                                        <td className="p-3 pr-1 text-start">{application.location}</td>
+                                        <td className="p-3 pr-1 text-start">{application.status}</td>
+                                        <td className="pr-1 text-start">{application.dateAdded}</td>
+                                        <td className="flex space-x-5 p-1 pr-0 text-start">
+                                            <TbTrashX className='text-red-700 text-xl' onClick={() => handleDelete(application.id)}/>
+                                            <MdModeEdit className=' text-blue-900 text-xl'/>
+                                            <MdOutlineLabelImportant className='text-yellow-400 text-xl'/>
+                                            
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

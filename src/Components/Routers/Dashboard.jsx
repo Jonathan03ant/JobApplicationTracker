@@ -2,25 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { auth, db } from '../../Firebase';
 import ApplicationTable from '../ApplicationTable';
-import { set } from 'mongoose';
+
 
 export default function DashBoard(){
     const [applications, setApplications] = useState([]);
+    const [refresh, setRefresh] = useState(false);
 
-    useEffect(() =>{
+    useEffect(() => {
         const fetchApplications = async () => {
             const userId = auth.currentUser.uid;
-            const querySnapshot = await getDocs(collection(db, "users", userId, "applications"));
-            const applications = querySnapshot.docs.map(doc => doc.data());
-            setApplications(applications);
+            const applicationsRef = collection(db, 'users', userId, 'applications');
+            const querySnapshot = await getDocs(applicationsRef);
+            setApplications(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
         };
-
+    
         fetchApplications();
-    }, []);
+    }, [refresh]);
+
+    const handleRefresh = () => {
+        setRefresh(prev => !prev);
+    };
 
     return(
-        <div>
-            <ApplicationTable applications={applications} />
+        <div className='px-10 py-20'>
+            <ApplicationTable applications={applications} handleRefresh={handleRefresh}  />
         </div>
     )
 }
