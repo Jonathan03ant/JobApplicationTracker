@@ -9,7 +9,12 @@ export default {
                 '160': '40rem',  // 640px
               },
           fontFamily: {
-            'crimson': ['Crimson Text', 'serif']
+            'crimson': ['Crimson Text', 'serif'],
+            'work': ['Work Sans', 'sans-serif'],
+            'cara': ['Chakra Petch', 'sans-serif'],
+          },
+          colors: {
+            
           }
         }
       },
