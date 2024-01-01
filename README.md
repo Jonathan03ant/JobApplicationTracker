@@ -1,8 +1,11 @@
 # Job Application Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+Job Application Tracker (Zt-j-geez.com) is a web application built with React and Firebase that helps users manage their job applications. It provides a user-friendly interface where users can add, edit, go to the official job link, and delete job applications with the ability to add specific applications to a "Watchlist".
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Each application has a tracking details such as the job title, company name, application status, and notes.
+
+The application uses Firebase for user authentication and Firestore as a NoSQL database to store the job applications. It leverages the real-time capabilities of Firestore to ensure the data displayed to the user is always up-to-date.
+
+The main goal of the Job Application Tracker is to simplify the job application process by providing a centralized platform where users can easily manage and track all their job applications.
