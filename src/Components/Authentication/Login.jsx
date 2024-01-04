@@ -75,6 +75,7 @@ export default function login() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                        <a href="#" className='text-sm underline text-blue-500'> forgot your password </a>
                         <button className='bg-blue-200 w-54 hover:bg-gray-200 text-black py-2 px-4 rounded ' type='submit'> Sign In </button>
                         <GoogleIcon onClick={signInWithGoogle} />
 
