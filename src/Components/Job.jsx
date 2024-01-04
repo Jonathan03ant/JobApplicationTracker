@@ -1,22 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Job extends Component {
-    render() {
-        return (
-            <div className='bg-white shadow-emerald-200 rounded p-4 h-auto md:h-64'>
-                <div>
-                    <h3> Company Name </h3>
-                    <p> Status Option Waiting, Applied, Interview...</p>
-                    <p> Job Title </p>
-                    <p> Go to link </p>
-                    <p> Place</p>
-                    <p> Date Applied </p>
-                    <p> contact </p>
-                </div>
-                <button className='bg-yellow-100 py-1.5 px-3.5 rounded-lg hover:bg-yellow-300 mt-4 self-end'> Update</button>
+export default function Job({ application, handleRefresh }) {
+
+    const handleUpdate = async () => {
+        // Update the job application data here...
+
+        // After updating the data, call handleRefresh to refresh the data in the Watchlist component.
+        handleRefresh();
+    };
+
+    return (
+        <div className='bg-white shadow-emerald-200 rounded p-4 h-auto md:h-64'>
+            <div>
+                <h3>Company Name: {application.companyName}</h3>
+                <p>App Status: {application.status}</p>
+                <p>Job Title:{application.jobTitle}</p>
+                <p><a href={application.jobLink}>Go to Application</a></p>
+                <p>Place: {application.place}</p>
+                <p>{application.contact}</p>
             </div>
-        );
-    }
+            <button onClick={handleUpdate} className='bg-yellow-100 py-1.5 px-3.5 rounded-lg hover:bg-yellow-300 mt-4 self-end'>Remove from Watchlist </button>
+        </div>
+    );
 }
 
-export default Job;
