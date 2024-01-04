@@ -1,5 +1,6 @@
 import React from 'react';
-import { doc, deleteDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
+import { doc, deleteDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../Firebase';
 import { IoArrowRedoOutline } from "react-icons/io5";
 import { TbTrashX } from "react-icons/tb";
@@ -9,10 +10,30 @@ import { MdOutlineLabelImportant } from "react-icons/md";
 
 
 export default function ApplicationTable({ applications = [], handleRefresh }) {
+    const navigate = useNavigate();
+    
     const handleDelete = async (id) => {
         const userId = auth.currentUser.uid;
-        await deleteDoc(doc(db, 'users', userId, 'applications', id));
-        handleRefresh();
+        if (window.confirm('Are you sure you want to delete this application?')) {
+            await deleteDoc(doc(db, 'users', userId, 'applications', id));
+            handleRefresh();
+        }
+    };
+
+    const handleWatchlist = async (id) => {
+        if (window.confirm('Are you sure you want to add this application to your watchlist?')){
+            const userId = auth.currentUser.uid;
+            const applicationRef = doc(db, 'users', userId, 'applications', id);
+
+            const application = await getDoc(applicationRef);
+            if (application.exists()) {
+                await updateDoc(applicationRef, {
+                    watchlist: !application.data().watchlist,
+                })
+                handleRefresh();
+                navigate('/watchlist');
+            }
+        }
     };
 
     return (
@@ -55,10 +76,15 @@ export default function ApplicationTable({ applications = [], handleRefresh }) {
                                         <td className="p-3 pr-1 text-start">{application.status}</td>
                                         <td className="pr-1 text-start">{application.dateAdded}</td>
                                         <td className="flex space-x-5 p-1 pr-0 text-start">
-                                            <TbTrashX className='text-red-700 text-xl' onClick={() => handleDelete(application.id)}/>
-                                            <MdModeEdit className=' text-blue-900 text-xl'/>
-                                            <MdOutlineLabelImportant className='text-yellow-400 text-xl'/>
-                                            
+                                            <button onClick={() => handleDelete(application.id)}>
+                                                <TbTrashX className='text-red-700 text-xl'/>
+                                            </button>
+                                            <button onClick={() => handleEdit(application.id)}>
+                                                <MdModeEdit className=' text-blue-900 text-xl'/>
+                                            </button>
+                                            <button onClick={() => handleWatchlist(application.id)}>
+                                                <MdOutlineLabelImportant className='text-yellow-400 text-xl'/>
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
@@ -66,7 +92,6 @@ export default function ApplicationTable({ applications = [], handleRefresh }) {
                             </table>
                         </div>
                         </div>
-                       
                     </div>
                     </div>
                 </div>

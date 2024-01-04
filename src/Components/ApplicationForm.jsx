@@ -37,7 +37,7 @@ export default function ApplicationForm({
 
                                 <div className="lg:col-span-2">
                                     <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
-
+                                        
                                         <div className="md:col-span-5">
                                             <label for="jobLink">Job Link</label>
                                             <input type="text" name="jobLink" id="jobLink" 
