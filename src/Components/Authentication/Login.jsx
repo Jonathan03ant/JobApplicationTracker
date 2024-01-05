@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {auth} from '../../Firebase';
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from 'firebase/auth';
 import HomeNav from './HomeNav';
 import GoogleIcon from '../Icons/GoogleSignin';
 
@@ -47,6 +47,20 @@ export default function login() {
             })
     }
 
+    const forgotPassword = useCallback((event) => {
+        event.preventDefault();
+
+        sendPasswordResetEmail(auth, email)
+            .then (() => {
+                alert('Password reset email sent!');
+            })
+            .catch ((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage)
+            });
+    }, [email]);
+
 
     return (
         <>
@@ -75,7 +89,7 @@ export default function login() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <a href="#" className='text-sm underline text-blue-500'> forgot your password </a>
+                        <a href="#" className='text-sm underline text-blue-500' onClick={forgotPassword}> forgot your password </a>
                         <button className='bg-blue-200 w-54 hover:bg-gray-200 text-black py-2 px-4 rounded ' type='submit'> Sign In </button>
                         <GoogleIcon onClick={signInWithGoogle} />
 
