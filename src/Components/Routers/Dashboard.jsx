@@ -24,7 +24,7 @@ export default function DashBoard(){
     };
 
     return(
-        <div className='px-10 py-20'>
+        <div className='px-10 py-36 w-full'>
             <ApplicationTable applications={applications} handleRefresh={handleRefresh}  />
         </div>
     )
