@@ -24,14 +24,18 @@ export default function ApplicationTable({ applications = [], handleRefresh }) {
         if (window.confirm('Are you sure you want to add this application to your watchlist?')){
             const userId = auth.currentUser.uid;
             const applicationRef = doc(db, 'users', userId, 'applications', id);
-
+    
             const application = await getDoc(applicationRef);
             if (application.exists()) {
-                await updateDoc(applicationRef, {
-                    watchlist: !application.data().watchlist,
-                })
-                handleRefresh();
-                navigate('/watchlist');
+                if (application.data().watchlist) {
+                    alert('This application is already in the watchlist.');
+                } else {
+                    await updateDoc(applicationRef, {
+                        watchlist: true,
+                    })
+                    alert('This application has been added to your watchlist!');
+                    handleRefresh();
+                }
             }
         }
     };
@@ -83,7 +87,7 @@ export default function ApplicationTable({ applications = [], handleRefresh }) {
                                                 <MdModeEdit className=' text-blue-900 text-xl'/>
                                             </button>
                                             <button onClick={() => handleWatchlist(application.id)}>
-                                                <MdOutlineLabelImportant className='text-yellow-400 text-xl'/>
+                                                <MdOutlineLabelImportant className={application.watchlist ? 'text-green-400 text-xl' : 'text-yellow-400 text-xl'} />
                                             </button>
                                         </td>
                                     </tr>
