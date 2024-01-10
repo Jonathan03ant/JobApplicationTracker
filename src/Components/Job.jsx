@@ -1,4 +1,9 @@
 import React from 'react';
+import { IoNavigate} from "react-icons/io5";
+import { IoIosArrowDroprightCircle } from "react-icons/io";
+
+
+
 
 export default function Job({ application, handleRefresh }) {
 
@@ -10,16 +15,19 @@ export default function Job({ application, handleRefresh }) {
     };
 
     return (
-        <div className='bg-white shadow-emerald-200 rounded p-4 h-auto md:h-64'>
-            <div>
-                <h3>Company Name: {application.companyName}</h3>
-                <p>App Status: {application.status}</p>
-                <p>Job Title:{application.jobTitle}</p>
-                <p><a href={application.jobLink}>Go to Application</a></p>
-                <p>Place: {application.place}</p>
-                <p>{application.contact}</p>
+        <div className='bg-white shadow-emerald-400 rounded p-4 h-auto md:h-64'>
+            <div className=' font-crimson text-xl'>
+                <h3> <span className='text-2xl text-blue-950'>Company Name: </span>{application.companyName}</h3>
+                <p> <span className='text-2xl  text-blue-950'>App Status: </span>App Status: {application.status}</p>
+                <p><span className='text-2xl   text-blue-950'>Job Title: </span>{application.jobTitle}</p>
+                <p><span className='text-2xl   text-blue-950'>Navigate: </span> <a href={application.jobLink}>Link</a></p>
+                <p><span className='text-2xl   text-blue-950'>Location: </span>{application.location}</p>
+                <p><span className='text-2xl   text-blue-950'>Contact</span> {application.contact}</p>
+                <p><span className='text-2xl   text-blue-950'>Notes </span> {application.notes}</p>
             </div>
-            <button onClick={handleUpdate} className='bg-yellow-100 py-1.5 px-3.5 rounded-lg hover:bg-yellow-300 mt-4 self-end'>Remove from Watchlist </button>
+            <div className='flex justify-end'>
+                <button className='text-green-400 text-lg'> <IoNavigate /> </button>
+            </div>
         </div>
     );
 }

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Job from '../Job';
-import NavBar from '../NavBar';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { auth, db } from '../../Firebase';
 

@@ -2,10 +2,10 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { doc, deleteDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../Firebase';
-import { IoArrowRedoOutline } from "react-icons/io5";
+import { IoArrowRedoOutline} from "react-icons/io5";
 import { TbTrashX } from "react-icons/tb";
-import { MdModeEdit } from "react-icons/md";
-import { MdOutlineLabelImportant } from "react-icons/md";
+import { MdModeEdit, MdRemoveRedEye, MdOutlineLabelImportant  } from "react-icons/md";
+
 
 
 
@@ -49,7 +49,6 @@ export default function ApplicationTable({ applications = [], handleRefresh }) {
               
                         <div className="px-9 pt-5 flex justify-between items-stretch flex-wrap min-h-[70px] pb-0 bg-transparent">
                         <h3 className="flex flex-col items-start justify-center m-2 ml-0 font-medium text-xl/tight text-dark">
-                            <span className="mr-3 font-semibold text-dark">You have X Applications</span>
                             <span className="mt-1 font-medium text-secondary-dark text-lg/normal">Application Lists</span>
                         </h3>
                         </div>
@@ -87,7 +86,7 @@ export default function ApplicationTable({ applications = [], handleRefresh }) {
                                                 <MdModeEdit className=' text-blue-900 text-xl'/>
                                             </button>
                                             <button onClick={() => handleWatchlist(application.id)}>
-                                                <MdOutlineLabelImportant className={application.watchlist ? 'text-green-400 text-xl' : 'text-yellow-400 text-xl'} />
+                                            <MdRemoveRedEye className={application.watchlist ? 'text-green-400 text-xl' : 'text-yellow-400 text-xl'} />
                                             </button>
                                         </td>
                                     </tr>

@@ -29,13 +29,16 @@ export default function DashBoard(){
     };
 
     return(
-        <div className='px-10 py-36 w-full'>
+        <div className='px-10 py-36 w-full flex'>
             {user && (
-               <div>
-                  <h1>Welcome, {user.firstName} </h1>
-               </div>
+                <div className='h-full bg-white'>
+                    <h1 className='mx-32 text-2xl text-blue-950 font-crimson'>Welcome, {user.firstName} </h1>
+
+                </div>
            )}
-            <ApplicationTable applications={applications} handleRefresh={handleRefresh}  />
+            <div className='w-2/3 ml-32 items-center justify-center'>
+                <ApplicationTable applications={applications} handleRefresh={handleRefresh}  />
+            </div>
         </div>
     )
 }
