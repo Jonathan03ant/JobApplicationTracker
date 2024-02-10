@@ -32,7 +32,7 @@ export default function DashBoard(){
         <div className='px-10 py-36 w-full flex'>
             {user && (
                 <div className='h-full bg-white'>
-                    <h1 className='mx-32 text-2xl text-blue-950 font-crimson'>Welcome, {user.firstName} </h1>
+                    <h1 className='mx-32 text-2xl text-blue-950 font-crimson'>Welcome {user.firstName} </h1>
 
                 </div>
            )}
